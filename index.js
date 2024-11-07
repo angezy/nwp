@@ -21,6 +21,7 @@ app.use(express.json());
 app.engine('handlebars', engine({ 
   defaultLayout: 'main',
   partialsDir: path.join(__dirname, 'views/partials'),
+   layoutsDir: path.join(__dirname , 'views/layouts'),  
 }));
 app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
@@ -55,8 +56,38 @@ app.get('/signup', (req, res) => {
   res.render('signup', {title: `signup` , layout: false });
 });
 app.get('/dashboard', (req, res) => {
-  res.render('dashboard', { title:` dashboard `,  layout: false });
+  res.render('dashboard', { title:` dashboard `, layout: "__dashboard"});
 });
+app.get('/profile', (req, res) => {
+  res.render('profile', { title:` profile `, layout: "__dashboard"});
+});
+app.get('/tables', (req, res) => {
+  res.render('dashTable', { title:` Tables `, layout: "__dashboard"});
+});
+app.get('/virtual-reality', (req, res) => {
+  res.render('vreality', { title:` Virtual Reality `, layout: false});
+});
+app.get('/billing', (req, res) => {
+  res.render('billing', { title:` billing `, layout: "__dashboard"});
+});
+app.get('/rtl', (req, res) => {
+  res.render('rtl', { title:`داشبرد ستاره`,  layout: "__rtl" });
+});
+app.get('/billingfa', (req, res) => {
+  res.render('billingfa', { title:`صورتحساب`,  layout: "__rtl" });
+});
+app.get('/profilefa', (req, res) => {
+  res.render('profilefa', { title:`اطلاعات شخصی`,  layout: "__rtl" });
+});
+app.get('/tablesfa', (req, res) => {
+  res.render('dashTablefa', { title:`جدول ها`,  layout: "__rtl" });
+});
+
+
+
+
+
+
 
 // Global error handler
 app.use((err, req, res, next) => {

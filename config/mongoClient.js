@@ -7,7 +7,8 @@ async function createMongoClient() {
         host: process.env.SSH_HOST, // Your SSH host
         port: parseInt(process.env.SSH_PORT, 10), // Your SSH port
         username: process.env.SSH_USER, // Your SSH username
-        password: process.env.SSH_PASSWORD // Your SSH password
+        password: process.env.SSH_PASSWORD,   // Your SSH password
+        readyTimeout: 30000 
     };
 
     const mongoConfig = {

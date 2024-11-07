@@ -1,21 +1,27 @@
-// config/db.js
-const mongoose = require('mongoose');
-const createMongoClient = require('./mongoClient'); // Adjust the path if necessary
-require('dotenv').config();
+
+
+const { MongoClient } = require('mongodb');
+
+const uri = 'mongodb://localhost:27017/myNewDatabase'; // Update with your database name
+const client = new MongoClient(uri);
 
 let isConnected = false; // Track connection status
 
 async function connectToDatabase() {
-    try {
-        const mongoClient = await createMongoClient(); // Create the MongoDB client
-        // Store the connected client or perform further operations here if needed
-
-        console.log('Connected to MongoDB!');
-        return mongoClient; // Return the connected client
-    } catch (error) {
-        console.error('Database connection failed:', error);
-        throw error; // Rethrow the error for handling in higher-level code
+    if (!isConnected) {
+        try {
+            await client.connect(); // Connect to the MongoDB server
+            isConnected = true;
+            console.log('Connected to MongoDB locally');
+        } catch (err) {
+            console.error('Error connecting to MongoDB:', err);
+            throw err;
+        }
     }
+    return client.db(); // Return the database instance
 }
+
+
+
 
 module.exports = connectToDatabase;
