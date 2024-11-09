@@ -37,14 +37,14 @@ app.get('/', (req, res) => {
   res.render('index', { title: `Nick's Web Project page` });
 });
 app.get('/fa', (req, res) => {
-  res.render('fa' , { title: 'پروژه‌های وب نیک' });
+  res.render('fa' , { title: 'پروژه‌های وب نیک',  layout: "_fa" });
 });
 // Handle blogs routes (e.g., about page)
 app.get('/Blogs', (req, res) => {
   res.render('Blogs', { title: Blogs  });
 });
 app.get('/blogsfa', (req, res) => {
-  res.render('blogsfa', { title:` بلاگ ها `});
+  res.render('blogsfa', { title:` بلاگ ها `,  layout: "_fa" });
 });
 app.get('/signin', (req, res) => {
   res.render('signin', { title: `signin` ,  layout: false });
@@ -82,7 +82,9 @@ app.get('/profilefa', (req, res) => {
 app.get('/tablesfa', (req, res) => {
   res.render('dashTablefa', { title:`جدول ها`,  layout: "__rtl" });
 });
-
+app.get('/load-form', (req, res) => {
+  res.render('partials/__fullform', { layout: false});
+});
 
 
 
@@ -95,21 +97,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Internal server error' });
 });
 
-// Connect to the database and start the server
-async function startServer() {
-    try {
-        await connectToDatabase(); // Call your connection function
-        console.log('Connected to MongoDB!'); // Log success message
-        
-        // Start the server
-        app.listen(PORT, () => {
-            console.log(`Server is running on http://localhost:${PORT}`);
-        });
-    } catch (error) {
-        console.error('Database connection failed:', error); // Log the error
-        process.exit(1); // Exit the process with an error code
-    }
-}
+
 
 // Start the application
 async function startServer() {
@@ -122,9 +110,10 @@ async function startServer() {
     }
 }
 
-startServer();
 
 
-        app.listen(port, () => {
-            console.log(`Server is running on http://localhost:${port}`);
-        });
+
+app.listen(port, () => {
+console.log(`Server is running on http://localhost:${port}`);
+});
+

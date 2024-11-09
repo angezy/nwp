@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js", 
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,10 @@
     "ssh2": "^1.16.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.7"
+    "@tailwindcss/forms": "^0.5.9",
+    "autoprefixer": "^10.4.20",
+    "nodemon": "^3.1.7",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14"
   }
 }
