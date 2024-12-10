@@ -3,40 +3,82 @@
 
     <!-- page header -->
     <header id="home" class="header">
+        <!-- Video background -->
+        <video autoplay muted loop playsinline class="header-video">
+            <source src="https://videos.pexels.com/video-files/1851190/1851190-uhd_3840_2160_25fps.mp4"
+                type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
         <div class="overlay"></div>
         <div class="header-content container">
             <h1 class="header-title">
-                <span class="up">HI!</span>
+                <span class="up">Now it's time to start a career!</span>
                 <span class="down">We Are Nick</span>
             </h1>
             <p class="header-subtitle">FRONTEND WEB DESIGNER</p>
             <p class="header-subtitle">BACKEND WEB DEVELOPER</p>
 
-            <button id="preview-button" class="btn btn-primary">customize preview</button>
+            <a href="Preview-form" class="btn btn-primary">customize preview</a>
         </div>
     </header><!-- end of page header -->
+    <div class="scroll-reveal">
+        {{> __about}}
+    </div>
 
-    {{> __about}}
+    <div class="scroll-reveal">
+        {{> __service}}
+    </div>
 
-    {{> __service}}
+    <div class="scroll-reveal">
+        {{> __darkCard}}
+    </div>
 
-    
-     {{> __darkCard}}
+    <div class="scroll-reveal">
+        {{>container}}
+    </div>
+
+    <div class="scroll-reveal">
+        {{> testimonial}}
+    </div>
+
+    <div class="scroll-reveal">
+        {{> __Blogs}}
+    </div>
+
+    <div class="scroll-reveal">
+        {{> FAQ}}
+    </div>
+
+    <div class="scroll-reveal">
+        {{> contactus}}
+    </div>
 
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const revealSections = document.querySelectorAll('.scroll-reveal');
 
-    {{>container}}
+  function handleScroll() {
+    revealSections.forEach((section) => {
+      const sectionTop = section.getBoundingClientRect().top;
+      const sectionBottom = section.getBoundingClientRect().bottom;
+      const triggerPoint = window.innerHeight * 0.8; // Adjust trigger point
 
+      // Show section when scrolled down
+      if (sectionTop < triggerPoint && sectionBottom > 0) {
+        section.classList.add('visible');
+      } else {
+        // Hide section when scrolled back up or out of view
+        section.classList.remove('visible');
+      }
+    });
+  }
 
+  window.addEventListener('scroll', handleScroll);
+  handleScroll(); // Run on page load to check the initial visibility
+});
 
-    {{> testimonial}}
-
-    {{> contactus}}
-
+</script>
 
 
 </div>
-
-
-
-   

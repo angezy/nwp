@@ -1,0 +1,65 @@
+<section class="container text-center">
+  <h6 class="section-title">Frequently Asked Questions</h6>
+
+  <div class="accordion">
+    <!-- FAQ Item 1 -->
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        What is Meyawo CSS? <span class="material-symbols-outlined icon">
+keyboard_arrow_down
+</span>
+      </button>
+      <div class="accordion-body">
+        Meyawo is a lightweight CSS framework designed for minimal and fast-loading websites. It’s perfect for simple
+        and elegant designs.
+      </div>
+    </div>
+
+    <!-- FAQ Item 2 -->
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        How do I install Meyawo? <span class="material-symbols-outlined icon">
+keyboard_arrow_down
+</span>
+      </button>
+      <div class="accordion-body">
+        You can include Meyawo by linking its CSS file via CDN in your HTML or downloading it from its official GitHub
+        repository.
+      </div>
+    </div>
+
+    <!-- FAQ Item 3 -->
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        Can I customize Meyawo? <span class="material-symbols-outlined icon">
+          keyboard_arrow_down
+        </span>
+      </button>
+      <div class="accordion-body">
+        Yes! Meyawo is simple to customize. You can override its styles using your own CSS or modify the original CSS
+        file to suit your needs.
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+  function toggleAccordion(button) {
+    const item = button.parentElement;
+    const isOpen = item.classList.contains('open');
+
+    // Close all open accordions
+    document.querySelectorAll('.accordion-item.open').forEach((openItem) => {
+      openItem.classList.remove('open');
+    });
+
+    // Smooth toggle of the clicked accordion
+    if (!isOpen) {
+      item.classList.add('open');
+    }
+  }
+
+
+</script>

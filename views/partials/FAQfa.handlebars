@@ -1,0 +1,61 @@
+<section class="container text-center" style="direction: rtl; text-align: right;">
+  <h6 class="section-title">سوالات متداول</h6>
+
+  <div class="accordion">
+    <!-- FAQ Item 1 -->
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        مایاوو CSS چیست؟ 
+<span class="material-symbols-outlined icon">
+keyboard_arrow_down
+</span>      </button>
+      <div class="accordion-body">
+        مایاوو یک فریم‌ورک CSS سبک است که برای طراحی سایت‌های سریع و ساده مناسب است. این فریم‌ورک برای طراحی‌های مینیمال و شیک ایده‌آل است.
+      </div>
+    </div>
+
+    <!-- FAQ Item 2 -->
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        چگونه می‌توان مایاوو را نصب کرد؟ 
+<span class="material-symbols-outlined icon">
+keyboard_arrow_down
+</span>      </button>
+      <div class="accordion-body">
+        می‌توانید مایاوو را با لینک دادن فایل CSS آن از طریق CDN در HTML خود اضافه کنید یا آن را از مخزن رسمی GitHub دانلود کنید.
+      </div>
+    </div>
+
+    <!-- FAQ Item 3 -->
+    <div class="accordion-item">
+      <button class="accordion-header" onclick="toggleAccordion(this)">
+        آیا می‌توان مایاوو را شخصی‌سازی کرد؟ 
+<span class="material-symbols-outlined icon">
+keyboard_arrow_down
+</span>      </button>
+      <div class="accordion-body">
+        بله! مایاوو بسیار ساده برای شخصی‌سازی است. می‌توانید با استفاده از CSS خود استایل‌های آن را تغییر دهید یا فایل اصلی CSS را برای نیازهای خود ویرایش کنید.
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  function toggleAccordion(button) {
+    const item = button.parentElement;
+    const isOpen = item.classList.contains('open');
+
+    // Close all open accordions
+    document.querySelectorAll('.accordion-item.open').forEach((openItem) => {
+      openItem.classList.remove('open');
+    });
+
+    // Smooth toggle of the clicked accordion
+    if (!isOpen) {
+      item.classList.add('open');
+    }
+  }
+
+
+</script>

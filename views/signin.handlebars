@@ -10,7 +10,7 @@
     Nick's Dashboard
   </title>
   <!--     Fonts and icons     -->
-   <!--  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" /> -->
+  <!--  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" /> -->
   <!-- Nucleo Icons -->
   <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
@@ -26,12 +26,15 @@
     <div class="row">
       <div class="col-12">
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4">
+        <nav
+          class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4">
           <div class="container-fluid">
             <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="/dashboard">
-              Star Dashboard 
+              Star Dashboard
             </a>
-            <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
+              aria-label="Toggle navigation">
               <span class="navbar-toggler-icon mt-2">
                 <span class="navbar-toggler-bar bar1"></span>
                 <span class="navbar-toggler-bar bar2"></span>
@@ -90,20 +93,23 @@
                 </div>
                 <div class="card-body">
                   <form id="signin-form" role="form">
-    <div class="mb-3">
-        <input type="email" class="form-control form-control-lg" id="email" placeholder="Email" aria-label="Email" required>
-    </div>
-    <div class="mb-3">
-        <input type="password" class="form-control form-control-lg" id="password" placeholder="Password" aria-label="Password" required>
-    </div>
-    <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="rememberMe">
-        <label class="form-check-label" for="rememberMe">Remember me</label>
-    </div>
-    <div class="text-center">
-        <button type="submit" class="btn btn-lg btn-primary sc btn-lg w-100 mt-4 mb-0"><span class="fb"></span>Sign in</button>
-    </div>
-</form>
+                    <div class="mb-3">
+                      <input type="email" class="form-control form-control-lg" id="email" placeholder="Email"
+                        aria-label="Email" required>
+                    </div>
+                    <div class="mb-3">
+                      <input type="password" class="form-control form-control-lg" id="password" placeholder="Password"
+                        aria-label="Password" required>
+                    </div>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="rememberMe">
+                      <label class="form-check-label" for="rememberMe">Remember me</label>
+                    </div>
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-lg btn-primary sc btn-lg w-100 mt-4 mb-0"><span
+                          class="fb"></span>Sign in</button>
+                    </div>
+                  </form>
 
                 </div>
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
@@ -114,12 +120,16 @@
                 </div>
               </div>
             </div>
-            <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
-              <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden" style="background-image: url('/assets/img/signin-ill.jpg');
+            <div
+              class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+              <div
+                class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden"
+                style="background-image: url('/assets/img/signin-ill.jpg');
           background-size: cover;">
                 <span class="mask bg-gradient-primary opacity-6"></span>
                 <h4 class="mt-5 text-white font-weight-bolder position-relative">"Attention is the new currency"</h4>
-                <p class="text-white position-relative">The more effortless the writing looks, the more effort the writer actually put into the process.</p>
+                <p class="text-white position-relative">The more effortless the writing looks, the more effort the
+                  writer actually put into the process.</p>
               </div>
             </div>
           </div>
@@ -128,71 +138,64 @@
     </section>
   </main>
   <!--   Core JS Files   -->
-  
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#signin-form').on('submit', function (e) {
-            e.preventDefault(); // Prevent the default form submission
-                 block();
-                 son();
-            // Get form values
-            const email = $('#email').val().trim();
-            const password = $('#password').val();
-            const rememberMe = $('#rememberMe').is(':checked');
+  <script>
+$(document).ready(function () {
+       $('#signin-form').on('submit', function (e) {
+        e.preventDefault(); // Prevent the default form submission
+        block();
+        son();
+        // Get form values
+        const email = $('#email').val().trim();
+        const password = $('#password').val();
+        const rememberMe = $('#rememberMe').is(':checked');
 
-            // Client-side input validation
-            if (!email || !password) {
-                alert('Please fill in both email and password fields.');
-                return;
-            }
-
-            // Send AJAX request
-            $.ajax({
-                url: '/auth/signin', // URL to handle sign-in on the server
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    email: email,
-                    password: password,
-                    rememberMe: rememberMe
-                }),
-                success: function (response) {
-                              bon();
-                              soff();
-                    alert(response.message || 'Sign-in successful!');
-
-                    // Store JWT securely
-                    if (rememberMe) {
-                        localStorage.setItem('authToken', response.token); // Store token in localStorage for persistent sessions
-                    } else {
-                        sessionStorage.setItem('authToken', response.token); // Store token in sessionStorage for session-based login
-                    }
-
-                    // Redirect to the dashboard
-                    window.location.href = '/dashboard';
-                },
-                error: function (xhr) {
-                    const error = xhr.responseJSON?.message || 'Sign-in failed!';
-                    alert(error);
-                }
-            });
+        // Client-side input validation
+        if (!email || !password) {
+          alert('Please fill in both email and password fields.');
+          return;
+        }
+        // Send AJAX request
+        $.ajax({
+          url: '/auth/signin',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            email: email,
+            password: password,
+            rememberMe: rememberMe
+          }),
+          success: function (response) {
+            bon();
+            alert(response.message || 'Sign-in successful!');
+            soff();
+        window.location.href = '/dashboard';
+          },
+          error: function (xhr) {
+            const error = xhr.responseJSON?.message || 'Sign-in failed!';
+            alert(error);
+            bon();
+            soff();
+          }
         });
+      });
     });
-</script>
+
+  </script>
 
 
-<script>
-function block() { $(".sc").prop('disabled', true); }
-function bon() { $(".sc").prop('disabled', false); }
-function son() { $(".fb").addClass("spinner-border spinner-border-sm"); }
-function soff() { $(".fb").removeClass("spinner-border spinner-border-sm"); }
-</script>
+  <script>
+    function block() { $(".sc").prop('disabled', true); }
+    function bon() { $(".sc").prop('disabled', false); }
+    function son() { $(".fb").addClass("spinner-border spinner-border-sm"); }
+    function soff() { $(".fb").removeClass("spinner-border spinner-border-sm"); }
+  </script>
 
 
- 
 
-  
+
+
 
 
 
@@ -213,7 +216,7 @@ function soff() { $(".fb").removeClass("spinner-border spinner-border-sm"); }
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src=""></script>
+  <script></script>
 </body>
 
 </html>

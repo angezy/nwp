@@ -1,16 +1,24 @@
+
 const express = require('express');
+const path = require('path');
 const router = express.Router();
 const authMiddleware = require('../middleware/authMiddleware');
 
-// Protected Dashboard Route
-router.get('/dashboard', authMiddleware, (req, res) => {
-    res.json({ message: `Welcome to your dashboard, user ${req.user.userId}` });
-});
+// Apply the auth middleware to all routes
+// router.use(authMiddleware);
 
-// Additional protected routes can be added here
-// Example: another protected route
-router.get('/profile', authMiddleware, (req, res) => {
-    res.json({ message: `This is your profile, user ${req.user.userId}` });
+// Serve protected views dynamically
+router.get('/:page', (req, res) => {
+    const page = req.params.page;
+    const filePath = path.join(__dirname, '../protected_views/pages', `${page}`);
+
+    // Check if the file exists and render it
+    res.render(filePath, { user: req.user }, (err) => {
+        if (err) {
+            // Handle cases where the file doesn't exist or another error occurs
+            res.status(404).send('Page not found');
+        }
+    });
 });
 
 module.exports = router;
