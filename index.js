@@ -239,8 +239,5 @@ app.use((err, req, res, next) => {
 
 // Start the Application
 app.listen(port, async () => {
-    // Test database connection before starting the server
-
-    console.log("result.recordset");
     console.log(`Server is running on http://localhost:${port}`);
 });

@@ -5,66 +5,12 @@ const validator = require('validator');
 const validateAndSanitize = require('../middleware/validateAndSanitize');
 const router = express.Router();
 
-// Validation and sanitization middleware
-const validateForm = [
-  body('FullName')
-    .trim()
-    .notEmpty().withMessage('Full name is required.')
-    .isLength({ max: 100 }).withMessage('Full name must be less than 100 characters.'),
-
-  body('Email')
-    .trim()
-    .notEmpty().withMessage('Email is required.')
-    .isEmail().withMessage('Invalid email format.')
-    .normalizeEmail(),
-
-  body('PhoneNumber')
-    .optional()
-    .trim()
-    .isMobilePhone('any', { strictMode: false }).withMessage('Invalid phone number format.')
-    .escape(),
-
-  body('BusinessName')
-    .trim()
-    .optional()
-    .isLength({ max: 200 }).withMessage('Business name must be less than 200 characters.'),
-
-  body('Industry')
-    .trim()
-    .optional()
-    .isLength({ max: 100 }).withMessage('Industry name must be less than 100 characters.'),
-
-    body('WebsiteURL')
-    .trim()
-    .isURL()
-    .withMessage('Invalid URL format.'),
-
-    
-  body('Budget')
-    .optional()
-    .isInt({ min: 0 }).withMessage('Budget must be a positive number.'),
-
-  body('LaunchDate')
-    .optional()
-    .isDate().withMessage('Invalid launch date format.'),
-
-  body('WebsiteFeatures')
-    .optional()
-    .trim()
-    .isLength({ max: 1000 }).withMessage('Website features must be less than 1000 characters.'),
-
-  body('OtherFeatures')
-    .optional()
-    .trim()
-    .isLength({ max: 1000 }).withMessage('Other features must be less than 1000 characters.'),
-
-  // Add more fields with validation as required.
-];
 
 // POST route for form submission
-router.post('/preview-form', validateAndSanitize, validateForm, async (req, res) => {
+router.post('/preview-form', validateAndSanitize, async (req, res) => {
   const dbConfig = req.app.get('dbConfig'); // Access DB config from app settings
   const formData = req.body;
+      const referrer = req.get('Referer');
 
   // Validate the incoming data
   const errors = validationResult(req);
@@ -86,7 +32,10 @@ router.post('/preview-form', validateAndSanitize, validateForm, async (req, res)
       // Handle WebsiteFeatures as an array, if present, join them into a string
       WebsiteFeatures: Array.isArray(formData.WebsiteFeatures) ? formData.WebsiteFeatures.join(', ') : validator.escape(formData.WebsiteFeatures || ''),
 
-      OtherFeatures: validator.escape(formData.OtherFeatures || ''),
+      OtherFeatures: Array.isArray(formData.OtherFeatures)
+        ? formData.OtherFeatures.join(', ')
+        : validator.escape(formData.OtherFeatures || ''),
+
       DesignStyle: validator.escape(formData.DesignStyle || ''),
       DesignColors: validator.escape(formData.DesignColors || ''),
       DesignInspirations: validator.escape(formData.DesignInspirations || ''),
@@ -148,10 +97,18 @@ router.post('/preview-form', validateAndSanitize, validateForm, async (req, res)
       .input('SpecificRequests', sql.NVarChar, sanitizedFormData.SpecificRequests)
       .query(query);
 
-    res.status(200).json({ message: 'Form data submitted successfully!', result });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Error saving data to database', details: err.message });
+      const successMessage = encodeURIComponent("Form submitted successfully!");
+    
+      // Redirect back to the referring page with a success message
+      res.redirect(`${referrer}?success=true&message=${successMessage}`);
+    } catch (err) {
+      console.error(err);
+    
+      // Get the referrer URL from the headers
+      const errorMessage = encodeURIComponent("Error saving data to database");
+    
+      // Redirect back to the referring page with an error message
+      res.redirect(`${referrer}?error=${errorMessage}`);
   } finally {
     sql.close();
   }

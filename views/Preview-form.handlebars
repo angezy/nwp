@@ -15,6 +15,7 @@
 
   <link rel="stylesheet" href="../public/css/mdb.min.css" />
 
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.1.0/mdb.min.css" rel="stylesheet" />
   <!-- Bootstrap CSS -->
   <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
      -->
@@ -56,7 +57,7 @@
         <div class=" border  shadow-0 mb-3 glass-card" style="width: 100%; height: 400px;">
           <div class="card-body rounded-4 text-light px-5 pt-4 pb-2">
             <form id="Preview-form" action="/api/preview-form" method="POST" class="text-center" novalidate>
-
+              <input type="hidden" name="lang" value="en" />
               <!-- Section 1: Basic Information -->
               <div id="section-1" class="form-section">
                 <h4 class="text-secondary">Basic Information</h4>
@@ -231,7 +232,8 @@
                 <br>
                 <div class="mb-4">
                   <div data-mdb-input-init class="form-outline">
-                    <input name="DesignInspirations" type="text" id="DesignInspirations" class=" text-secondary form-control" />
+                    <input name="DesignInspirations" type="text" id="DesignInspirations"
+                      class=" text-secondary form-control" />
                     <label class="form-label">Are there any websites whose design you admire?</label>
                   </div>
                 </div>
@@ -253,7 +255,8 @@
                 <div class="mb-4">
                   <div data-mdb-input-init class="form-outline">
                     <input name="UserActions" type="text" id="UserActions"
-                      placeholder="Purchase, contact you, subscribe to newsletter" class=" text-secondary form-control" />
+                      placeholder="Purchase, contact you, subscribe to newsletter"
+                      class=" text-secondary form-control" />
                     <label class="form-label">What actions would you like users to take on your website?</label>
                   </div>
                 </div>
@@ -276,7 +279,8 @@
                 <div class="mb-4">
                   <div data-mdb-input-init class="form-outline">
                     <input name="ExternalIntegrations" type="text" id="ExternalIntegrations"
-                      placeholder="Payment gateways, customer management systems" class=" text-secondary form-control" />
+                      placeholder="Payment gateways, customer management systems"
+                      class=" text-secondary form-control" />
                     <label class="form-label">Do you need your website to connect to external tools or APIs?</label>
                   </div>
                 </div>
@@ -350,10 +354,22 @@
               <div id="section-9" class="form-section hidden-section">
                 <div class="mb-4">
                   <div data-mdb-input-init class="form-outline">
-                    <textarea class=" text-secondary form-control" id="additionalInfo" name="SpecificRequests" rows="4"></textarea>
+                    <textarea class=" text-secondary form-control" id="additionalInfo" name="SpecificRequests"
+                      rows="4"></textarea>
                     <label class="form-label">Do you have any specific requests or expectations?</label>
                   </div>
                 </div>
+                <!-- Terms of Service Checkbox -->
+                <div class="mb-4">
+                  <div class="form-check text-center">
+                    <input class="form-check-input" type="checkbox" id="termsCheck" required />
+                    <label class="form-check-label" for="termsCheck">
+                      I agree to the <a href="/terms-of-service" target="_blank">Terms of Service</a>
+                    </label>
+                  </div>
+                </div>
+
+
                 <div class="text-center">
                   <button type="submit" class="btn btn-success" onclick="showNextSection(10)">Submit</button>
                 </div>
@@ -365,6 +381,10 @@
                   <div>
                     <p id="responseMessage"></p>
                   </div>
+                </div>
+                <div class="text-center">
+                  <a href="/" type="button" class="btn btn-primary">Home</a>
+                  <a href="/blogs" type="button" class="btn btn-primary">Our Blogs</a>
                 </div>
               </div>
 
@@ -381,6 +401,26 @@
 
   </div>
 
+  <!-- Modal Structure -->
+  <div class="modal fade" id="redirectModal" tabindex="-1" aria-labelledby="redirectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="redirectModalLabel"></h5>
+          <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="redirectModalBody"></div>
+        <div class="modal-footer">
+          <a href="/" class="btn btn-primary">Go to Home</a>
+          <a href="/blogs" class="btn btn-secondary">Go to Blogs</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
@@ -388,6 +428,67 @@
 
   <!-- MDB -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.1.0/mdb.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+  <script>
+    function handlePageLoad() {
+      const params = new URLSearchParams(window.location.search);
+
+      // Handle validation errors
+      const errors = params.get('errors');
+      if (errors) {
+        try {
+          // Parse the JSON string to get error messages
+          const errorMessages = JSON.parse(decodeURIComponent(errors));
+
+          // Combine all errors into a single string with each error on a new line
+          const errorText = errorMessages.map(msg => `• ${msg}`).join("\n");
+
+          // Display using SweetAlert2
+          Swal.fire({
+            title: "Please try again!",
+            text: errorText,
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+        } catch (e) {
+          console.error('Error parsing validation errors:', e);
+        }
+      }
+// Handle success message
+const success = params.get('success');
+if (success) {
+  Swal.fire({
+    title: "<h3 class='fw-bold text-secondary' style='font-size: 18px; margin: 0;'>The pre-purchase advisor has been <span class='fw-bold text-success' >successfully<span> <span class='fw-bold text-secondary' >registered!<span></h3>", // Smaller title
+    html: "<p class='fw-bold text-primary' style='font-size: 26px;'>Draw your dream site with us</p>", // Larger text
+    icon: "success",
+    confirmButtonText: "OK",
+    confirmButtonColor: "#28a745", // Green color for the OK button
+    footer: `<a  href="/blogs">Refer to the blog page for guidance</a>`,
+
+  }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "/blogs"; // Redirect to blogs on confirmation
+          } 
+        });
+      }
+
+      // Populate form fields with data from query parameters
+      const formElements = document.querySelectorAll("form#Preview-form [name]");
+      formElements.forEach(element => {
+        const value = params.get(element.name);
+        if (value) {
+          element.value = decodeURIComponent(value);
+        }
+      });
+    }
+
+    // Run on page load
+    window.onload = handlePageLoad;
+  </script>
+
+
 
   <script>
     function showNextSection(sectionId) {
@@ -400,7 +501,7 @@
           nextSection.classList.remove('hidden-section');
         }
       } else {
-        alert('لطفاً قبل از ادامه، تمام فیلدها را پر کنید.');
+        alert('Please fill in all fields before proceeding.');
       }
     }
 
@@ -416,7 +517,16 @@
     }
 
   </script>
-
+  <script>
+    // Validate if the terms checkbox is checked before proceeding
+    document.getElementById("submitButton").addEventListener("click", function (event) {
+      const termsCheck = document.getElementById("termsCheck");
+      if (!termsCheck.checked) {
+        alert("You must agree to the Terms of Service before submitting.");
+        event.preventDefault();  // Prevent form submission
+      }
+    });
+  </script>
 
   <script>
     function toggleOtherInput() {
@@ -433,12 +543,6 @@
         otherInput.value = ''; // Optionally clear the input field
       }
     }
-
-
-
-
-
-
 
     function toggleWebsiteUrl(isVisible) {
       const websiteUrlRow = document.getElementById("websiteUrlRow");
@@ -471,89 +575,12 @@
         if (selectedDate) {
           launchDateInput.value = selectedDate; // Set the value in the input field
         } else {
-          alert('لطفا یک تاریخ انتخاب کنید.');
+          alert('Please select a date.');
         }
       });
     });
 
   </script>
-
-
-  <script>
-    document.querySelector('form').addEventListener('submit', async function (event) {
-      event.preventDefault(); // Prevent the default form submission
-
-      // Collect form data
-      const formData = new FormData(event.target);
-      const data = {};
-      formData.forEach((value, key) => {
-        data[key] = value;
-      });
-
-      try {
-        // Send the form data to the server
-        const response = await fetch('/preview-form', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        });
-
-        const result = await response.json();
-        const responseMessageElement = document.getElementById('responseMessage');
-
-        // Display success or error message in section-10
-        if (response.ok) {
-          responseMessageElement.textContent = result.message || 'Your form has been submitted successfully!';
-          responseMessageElement.style.color = 'green';
-        } else {
-          responseMessageElement.textContent = result.error || 'An error occurred while submitting the form.';
-          responseMessageElement.style.color = 'red';
-        }
-
-        // Show section-10
-        showNextSection(10);
-      } catch (error) {
-        // Handle network or other errors
-        const responseMessageElement = document.getElementById('responseMessage');
-        responseMessageElement.textContent = 'An unexpected error occurred. Please try again later.';
-        responseMessageElement.style.color = 'red';
-
-        // Show section-10
-        showNextSection(10);
-      }
-    });
-
-
-  </script>
-
-  <script>
-
-    // Handle form submission
-    document.getElementById('Preview-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      // Collect all checked values
-      const selectedFeatures = [];
-      const checkboxes = document.querySelectorAll('input[name="WebsiteFeatures"]:checked');
-      checkboxes.forEach(function (checkbox) {
-        selectedFeatures.push(checkbox.value);
-      });
-
-      // If the "Other" checkbox is checked, include the other input value
-      const otherInput = document.getElementById('otherInput').value;
-      if (document.getElementById('otherFeatures').checked && otherInput) {
-        selectedFeatures.push(otherInput);
-      }
-
-      // Convert selected features array to a string (comma-separated)
-      const featuresString = selectedFeatures.join(', ');
-
-      console.log('Selected Features:', featuresString);
-    });
-  </script>
-
 
 </body>
 
