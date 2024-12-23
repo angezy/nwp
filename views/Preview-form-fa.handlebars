@@ -14,6 +14,7 @@
   <!-- MDB -->
 
   <link rel="stylesheet" href="public/css/mdb.rtl.min.css" />
+  <link rel="stylesheet" href="/assets/css/cs.css">
 
   <!-- Bootstrap CSS
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -27,13 +28,11 @@
 
 <body>
   <div class="container py-5">
-    <video autoplay muted loop playsinline class="header-video">
-      <source src="https://videos.pexels.com/video-files/10296178/10296178-hd_1920_1080_25fps.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+    <div id="night-sky" style="--number-of-stars: 20"></div>
+
     <div class="row d-flex align-items-center">
 
-      <div class="col-xl-6">
+      <div class="col-md-6">
         <span class="small text-secondary">قدم اول</span>
         <p class="fs-3 fw-bold text-primary">مشخصات فردی را وارد کنید</p>
 
@@ -53,7 +52,7 @@
 
 
 
-      <div class="col-xl-6">
+      <div class="col-md-6">
         <div class=" border  shadow-0 mb-3 glass-card" style="width: 100%; height: 400px;">
           <div class="card-body rounded-4 text-light px-5 pt-4 pb-2">
             <form id="Preview-form" action="/api/preview-form" method="POST" class="text-center" novalidate>
@@ -421,31 +420,6 @@
     </div>
   </div>
 
-
-
-
-  <!-- Modal Structure -->
-  <div class="modal fade" id="redirectModal" tabindex="-1" aria-labelledby="redirectModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="redirectModalLabel">پیام شما</h5>
-          <button type="button" class="btn-close btn-close-white" data-mdb-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" id="redirectModalBody">
-          لطفاً انتخاب کنید که کجا می‌خواهید بروید.
-        </div>
-        <div class="modal-footer justify-content-center">
-          <a href="/fa" class="btn btn-secondary">به خانه بروید</a>
-          <a href="/blogsfa" class="btn btn-secondary">به وبلاگ‌ها بروید</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
   </script>
@@ -453,6 +427,7 @@
   <!-- MDB -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/8.1.0/mdb.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="/assets/js/cs.js"></script>
 
 
 
@@ -529,7 +504,14 @@ if (success) {
           nextSection.classList.remove('hidden-section');
         }
       } else {
-        alert('لطفاً قبل از ادامه، تمام فیلدها را پر کنید.');
+        Swal.fire({
+          title: 'فیلدهای گمشده',
+          text: 'لطفاً قبل از ادامه، تمام فیلدها را پر کنید',
+          confirmButtonText: 'OK',
+
+          width: '300px', 
+        });
+
       }
     }
 
@@ -551,8 +533,15 @@ if (success) {
     document.getElementById("submitButton").addEventListener("click", function (event) {
       const termsCheck = document.getElementById("termsCheck");
       if (!termsCheck.checked) {
-        alert("شما باید با شرایط استفاده موافقت کنید تا فرم را ارسال کنید.");
-        event.preventDefault();  // Prevent form submission
+        event.preventDefault(); 
+        Swal.fire({
+          title: 'موافقت با شرایط',
+          text: 'شما باید با شرایط استفاده موافقت کنید تا فرم را ارسال کنید',
+          confirmButtonText: 'OK',
+
+          width: '300px', 
+        });
+
       }
     });
   </script>

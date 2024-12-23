@@ -4,8 +4,12 @@ const { body, validationResult } = require('express-validator');
 const validator = require('validator');
 const validateAndSanitize = require('../middleware/validateAndSanitize');
 const router = express.Router();
+require('dotenv').config();
+const { MailerSend, EmailParams, Sender, Recipient } = require("mailersend");
 
-
+const mailerSend = new MailerSend({
+    apiKey: process.env.MAILERSEND_API_KEY,
+});
 // POST route for form submission
 router.post('/preview-form', validateAndSanitize, async (req, res) => {
   const dbConfig = req.app.get('dbConfig'); // Access DB config from app settings
@@ -48,7 +52,9 @@ router.post('/preview-form', validateAndSanitize, async (req, res) => {
       LaunchDate: validator.isDate(formData.LaunchDate || '') ? formData.LaunchDate : null,
       Milestones: validator.escape(formData.Milestones || ''),
       CurrentWebsiteChallenges: validator.escape(formData.CurrentWebsiteChallenges || ''),
-      SpecificRequests: validator.escape(formData.SpecificRequests || '')
+      SpecificRequests: validator.escape(formData.SpecificRequests || ''), 
+      lang: validator.escape(formData.lang || ''),
+      
     };
 
     // Connect to MSSQL
@@ -61,13 +67,13 @@ router.post('/preview-form', validateAndSanitize, async (req, res) => {
         ProjectType, WebsiteFeatures, OtherFeatures, DesignStyle, DesignColors, 
         DesignInspirations, TargetAudience, UserActions, PreferredPlatform, 
         ExternalIntegrations, MaintenanceRequired, Budget, LaunchDate, Milestones, 
-        CurrentWebsiteChallenges, SpecificRequests
+        CurrentWebsiteChallenges, SpecificRequests, lang
       ) VALUES (
         @FullName, @Email, @PhoneNumber, @BusinessName, @Industry, @HasWebsite, @WebsiteURL, 
         @ProjectType, @WebsiteFeatures, @OtherFeatures, @DesignStyle, @DesignColors, 
         @DesignInspirations, @TargetAudience, @UserActions, @PreferredPlatform, 
         @ExternalIntegrations, @MaintenanceRequired, @Budget, @LaunchDate, @Milestones, 
-        @CurrentWebsiteChallenges, @SpecificRequests
+        @CurrentWebsiteChallenges, @SpecificRequests, @lang
       )
     `;
 
@@ -95,7 +101,42 @@ router.post('/preview-form', validateAndSanitize, async (req, res) => {
       .input('Milestones', sql.NVarChar, sanitizedFormData.Milestones)
       .input('CurrentWebsiteChallenges', sql.NVarChar, sanitizedFormData.CurrentWebsiteChallenges)
       .input('SpecificRequests', sql.NVarChar, sanitizedFormData.SpecificRequests)
+      .input('lang', sql.NVarChar, sanitizedFormData.lang)
       .query(query);
+
+
+
+
+        // Prepare email details
+        const lang = sanitizedFormData.lang;
+        const subject = lang === 'fa'
+            ? 'درخواست جدید پیش نمایش'
+            : 'Request a new preview';
+        const htmlMessage = lang === 'fa'
+            ? `<strong>شما یک درخواست جدید از ${sanitizedFormData.FullName} (${sanitizedFormData.Email}) دریافت کرده‌اید:</strong><br><br>${sanitizedFormData.content}`
+            : `<strong>You have received a new Request from ${sanitizedFormData.FullName} (${sanitizedFormData.Email}):</strong><br><br>${sanitizedFormData.content}`;
+        const textMessage = lang === 'fa'
+            ? `شما یک پیام جدید از ${sanitizedFormData.FullName} (${sanitizedFormData.Email}) دریافت کرده‌اید:\n\n${sanitizedFormData.SpecificRequests}`
+            : `You have received a new message from ${sanitizedFormData.FullName} (${sanitizedFormData.Email}):\n\n${sanitizedFormData.SpecificRequests}`;
+
+        // Send email with dynamic recipient
+        const sentFrom = new Sender("info@nickswebprojects.site", "Nicks Web Admin");
+
+        const recipients = [new Recipient(process.env.RECIPIENT_EMAIL2, "Managers")];
+
+        const cc = [new Recipient(process.env.RECIPIENT_EMAIL1, "Managers")];
+        const emailParams = new EmailParams()
+            .setFrom(sentFrom)
+            .setTo(recipients)
+            .setCc(cc)
+            .setSubject(subject)
+            .setHtml(htmlMessage)
+            .setText(textMessage);
+
+        // Send the email
+        await mailerSend.email.send(emailParams);
+        console.log('Email sent successfully');
+
 
       const successMessage = encodeURIComponent("Form submitted successfully!");
     

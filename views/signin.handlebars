@@ -56,12 +56,6 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link me-2" href="signup">
-                    <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                    Sign Up
-                  </a>
-                </li>
-                <li class="nav-item">
                   <a class="nav-link me-2" href="/signin">
                     <i class="fas fa-key opacity-6 text-dark me-1"></i>
                     Sign In
@@ -70,7 +64,7 @@
               </ul>
               <ul class="navbar-nav d-lg-block d-none">
                 <li class="nav-item">
-                  <a href="contactus" class="btn btn-sm mb-0 me-1 btn-primary">Hire Us</a>
+                  <a href="contactus" class="btn btn-sm mb-0 me-1 btn-primary">Exclusive preview</a>
                 </li>
               </ul>
             </div>
@@ -112,12 +106,7 @@
                   </form>
 
                 </div>
-                <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                  <p class="mb-4 text-sm mx-auto">
-                    Don't have an account?
-                    <a href="javascript:;" class="text-primary text-gradient font-weight-bold">Sign up</a>
-                  </p>
-                </div>
+
               </div>
             </div>
             <div
@@ -141,8 +130,8 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script>
-$(document).ready(function () {
-       $('#signin-form').on('submit', function (e) {
+    $(document).ready(function () {
+      $('#signin-form').on('submit', function (e) {
         e.preventDefault(); // Prevent the default form submission
         block();
         son();
@@ -168,16 +157,32 @@ $(document).ready(function () {
           }),
           success: function (response) {
             bon();
-            alert(response.message || 'Sign-in successful!');
             soff();
-        window.location.href = '/dashboard';
+            window.location.href = '/dashboard';
           },
           error: function (xhr) {
-            const error = xhr.responseJSON?.message || 'Sign-in failed!';
-            alert(error);
+            console.error('XHR Error:', xhr); // Log the entire XHR object for debugging
+
+            let errorMessage = 'An unexpected error occurred'; // Default fallback
+
+            if (xhr.responseJSON) {
+              errorMessage = xhr.responseJSON.message; // Use the JSON response if available
+            } else if (xhr.responseText) {
+              try {
+                const parsed = JSON.parse(xhr.responseText); // Attempt to parse the text
+                errorMessage = parsed.message || errorMessage;
+              } catch (e) {
+                console.error('Failed to parse responseText:', e);
+              }
+            } else if (xhr.statusText) {
+              errorMessage = xhr.statusText; // Use status text as fallback
+            }
+
+            alert(errorMessage); // Display the error message
             bon();
             soff();
           }
+
         });
       });
     });

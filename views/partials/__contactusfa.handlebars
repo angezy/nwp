@@ -1,27 +1,31 @@
 <!-- contact section -->
 <section class="section" id="contactus">
     <div class="container text-center">
-        <p class="section-subtitle">How can you get in touch with me?</p>
-        <h6 class="section-title mb-5">Contact Me</h6>
+        <p class="section-subtitle">چگونه می‌توانید با من ارتباط برقرار کنید؟</p>
+        <h6 class="section-title mb-5">تماس با من</h6>
+    </div>
+    <div class="scroll-reveal">
+
         <!-- contact form -->
         <form action="/api/contact" method="POST" class="contact-form col-md-10 col-lg-8 m-auto">
             <div class="form-row">
-                <input type="hidden" name="lang" value="en" />
+                <input type="hidden" name="lang" value="fa" />
                 <div class="form-group col-sm-6">
-                    <input name="FullName" type="text" size="50" class="form-control" placeholder="Your Name" required>
+                    <input name="FullName" type="text" size="50" class="form-control" placeholder="نام کامل" required>
                 </div>
                 <div class="form-group col-sm-6">
-                    <input name="Email" type="email" class="form-control" placeholder="Enter Your Email" required>
-                </div>
+                    <input name="Email" type="Email" class="form-control" placeholder="ایمیل خود را وارد کنید" required>
+                </div> 
                 <div class="form-group col-sm-12">
-                    <textarea name="content" id="comment" rows="6" class="form-control" placeholder="Write something"
+                    <textarea name="content" id="comment" rows="6" class="form-control" placeholder="چیزی بنویسید"
                         required></textarea>
                 </div>
                 <div class="form-group col-sm-12 mt-3">
-                    <input type="submit" value="Send Message" class="btn btn-outline-primary rounded">
+                    <input type="submit" value="ارسال پیام" class="btn btn-outline-primary rounded">
                 </div>
             </div>
         </form><!-- end of contact form -->
+    </div>
     </div><!-- end of container -->
 </section><!-- end of contact section -->
 
@@ -40,18 +44,18 @@
                     : errorMessages;
 
                 Swal.fire({
-                    title: "Please try again!",
+                    title: "لطفاً دوباره امتحان کنید!",
                     text: errorText,
                     icon: "error",
-                    confirmButtonText: "Okay",
+                    confirmButtonText: "باشه",
                 });
             } catch (e) {
                 console.error('Error parsing validation errors:', e);
                 Swal.fire({
-                    title: "Error",
-                    text: "Something went wrong. Please try again.",
+                    title: "خطا",
+                    text: "مشکلی پیش آمده است. لطفاً دوباره تلاش کنید.",
                     icon: "error",
-                    confirmButtonText: "Okay",
+                    confirmButtonText: "باشه",
                 });
             }
         }
@@ -60,16 +64,16 @@
         const success = params.get('success');
         if (success) {
             Swal.fire({
-                title: "<h3 class='fw-bold text-secondary' style='font-size: 18px; margin: 0;'>Contact Form <span class='fw-bold text-success'>Successfully<span> <span class='fw-bold text-secondary'>Submitted!<span></h3>", // Smaller title
-                html: "<p class='fw-bold text-primary' style='font-size: 26px;'>We will contact you soon.</p>", // Larger text
+                title: "<h3 class='fw-bold text-secondary' style='font-size: 18px; margin: 0;'>فرم تماس با موفقیت <span class='fw-bold text-success'>ثبت<span> <span class='fw-bold text-secondary'>شد!<span></h3>", // Smaller title
+                html: "<p class='fw-bold text-primary' style='font-size: 26px;'>به زودی با شما تماس خواهیم گرفت</p>", // Larger text
                 icon: "success",
-                confirmButtonText: "Okay",
+                confirmButtonText: "باشه",
                 confirmButtonColor: "#28a745",
-                footer: "Serving our customers since 2020!",
+                footer: "!از سال1400 تاکنون در کنار مشتریان خود هستیم",
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Redirect dynamically based on language (optional)
-                    const lang = params.get('lang') || 'en'; // Default to 'en' if not provided
+                    const lang = params.get('lang') || 'fa'; // Default to 'fa' if not provided
                     window.location.href = lang === 'fa' ? "/fa" : "/";
                 }
             });

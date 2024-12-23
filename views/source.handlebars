@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shooting Stars Background</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: radial-gradient(circle at center, #0b0d18, #1e1f29, #050610);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .night {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform: rotateZ(45deg);
+        }
+
+        .shooting_star {
+            position: absolute;
+            width: 150px;
+            height: 2px;
+            background: linear-gradient(to right, white, rgba(255, 255, 255, 0));
+            top: 50%;
+            left: 50%;
+            animation: shooting 3s linear infinite;
+        }
+
+        @keyframes shooting {
+            0% {
+                transform: translateX(0px) translateY(0px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-500px) translateY(500px);
+                opacity: 0;
+            }
+        }
+
+        /* Generate multiple shooting stars */
+        .shooting_star:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+        .shooting_star:nth-child(2) {
+            top: 20%;
+            left: 40%;
+            animation-delay: 1s;
+        }
+        .shooting_star:nth-child(3) {
+            top: 30%;
+            left: 60%;
+            animation-delay: 2s;
+        }
+        .shooting_star:nth-child(4) {
+            top: 40%;
+            left: 10%;
+            animation-delay: 0.5s;
+        }
+        .shooting_star:nth-child(5) {
+            top: 50%;
+            left: 70%;
+            animation-delay: 1.5s;
+        }
+        .shooting_star:nth-child(6) {
+            top: 60%;
+            left: 30%;
+            animation-delay: 2.5s;
+        }
+        .shooting_star:nth-child(7) {
+            top: 70%;
+            left: 50%;
+            animation-delay: 0.7s;
+        }
+        .shooting_star:nth-child(8) {
+            top: 80%;
+            left: 80%;
+            animation-delay: 2.2s;
+        }
+        .shooting_star:nth-child(9) {
+            top: 90%;
+            left: 15%;
+            animation-delay: 1.2s;
+        }
+    </style>
+</head>
+<body>
+    <div class="night">
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Background with Comets</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: radial-gradient(circle at center, #0b0d18, #1e1f29, #050610);
+            overflow: hidden;
+        }
+
+        /* Stars */
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.5;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Comet Style */
+        .comet {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.4) 70%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 20px 8px rgba(255, 255, 255, 0.6);
+            animation: cometMove 7s linear infinite;
+        }
+
+        .comet::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to left, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6));
+            top: 50%;
+            left: -100px;
+            transform: translateY(-50%);
+            opacity: 0.8;
+        }
+
+        @keyframes cometMove {
+            0% {
+                transform: translate(-20vw, -20vh) scale(0.8);
+                opacity: 1;
+            }
+            70% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translate(120vw, 120vh) scale(0.3);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Generate Stars -->
+    <script>
+        const starCount = 150;
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            document.body.appendChild(star);
+        }
+
+        // Generate Multiple Comets
+        const cometCount = 9;
+        for (let i = 0; i < cometCount; i++) {
+            const comet = document.createElement('div');
+            comet.classList.add('comet');
+            comet.style.left = Math.random() * -20 + 'vw';
+            comet.style.top = Math.random() * -20 + 'vh';
+            comet.style.animationDelay = Math.random() * 7 + 's';
+            document.body.appendChild(comet);
+        }
+    </script>
+</body>
+</html>

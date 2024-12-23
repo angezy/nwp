@@ -30,7 +30,9 @@ const deleteFile = (filePath) => {
 // Route to add a new blog post
 router.post('/add-blog', upload.single('imag'), async (req, res) => {
     console.log("POST /api/add-blog route hit");
-    const { title, description, contents, en } = req.body;
+    const referrer = req.get('Referer');
+    const { title, description, contents } = req.body;
+    const En = req.body.En === 'true' || req.body.En === 'True';
     const imageFile = req.file ? `public/css/uploads/images/${req.file.filename}` : null;
     try {
         const pool = await sql.connect(dbConfig);
@@ -44,13 +46,15 @@ router.post('/add-blog', upload.single('imag'), async (req, res) => {
             .query(`
                 INSERT INTO dbo.BlogPosts_tbl (Title, Description, Imag, Contents, En, CreatedAt)
                 VALUES (@Title, @Description, @Imag, @Contents, @En, GETDATE())
-            `);
-
-        res.status(201).json({ message: 'Blog post added successfully' });
+            `); 
+    
+        return res.redirect(`${referrer}?success=Blog+post+added+successfully`);
     } catch (err) {
-        console.error('Error adding blog post:', err);
-        res.status(500).json({ message: 'Error adding blog post' });
-    }
+        console.error('Error updating blog post:', err);
+        return res.redirect(`${referrer}?error=Error+adding+blog+post`);
+    } finally {
+        sql.close();
+      }
 });
 
 
@@ -58,7 +62,7 @@ router.post('/add-blog', upload.single('imag'), async (req, res) => {
 // Route to delete a blog post by ID
 router.delete('/delete-blog/:id', async (req, res) => {
     const { id } = req.params;
-
+console.log(id);
     try {
         const pool = await sql.connect(dbConfig);
 
@@ -85,7 +89,9 @@ router.delete('/delete-blog/:id', async (req, res) => {
     } catch (err) {
         console.error('Error deleting blog post:', err);
         res.status(500).json({ message: 'Error deleting blog post' });
-    }
+    } finally {
+        sql.close();
+      }
 });
 
 // Route to edit a blog post
@@ -164,7 +170,9 @@ router.post('/edit-blog/:id', upload.single('imag'), async (req, res) => {
     } catch (err) {
         console.error('Error updating blog post:', err);
         return res.redirect(`${referer}?error=Error+updating+blog+post`);
-    }
+    } finally {
+        sql.close();
+      }
 });
 
 

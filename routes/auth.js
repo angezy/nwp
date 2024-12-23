@@ -88,7 +88,6 @@ router.post('/signin', async (req, res) => {
         sameSite: 'Strict',
     });
 
-console.log({tokenOptions, token});
         res.json({ message: 'Signin successful', token });
     } catch (err) {
         console.error('Error during signin:', err);

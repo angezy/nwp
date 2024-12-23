@@ -1,27 +1,26 @@
 {{> navbar}}
-<div class="content-section">
+<div class="content-section body">
 
     <!-- page header -->
-    <header id="home" class="header">
+    <header id="home" class="header body">
         <!-- Video background -->
-        <video autoplay muted loop playsinline class="header-video">
-            <source src="https://videos.pexels.com/video-files/1851190/1851190-uhd_3840_2160_25fps.mp4"
-                type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+    <canvas id="backgroundCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></canvas>
         <div class="overlay"></div>
         <div class="header-content container">
             <h1 class="header-title">
-                <span class="up">Now it's time to start a career!</span>
-                <span class="down">We Are Nick</span>
+                <span class="up">Now it's time to start being professional!</span>
+                <span class="down">Become global with us</span>
             </h1>
-            <p class="header-subtitle">FRONTEND WEB DESIGNER</p>
-            <p class="header-subtitle">BACKEND WEB DEVELOPER</p>
+            <p class="header-subtitle"></p>
+            <p class="header-subtitle"></p>
 
-            <a href="Preview-form" class="btn btn-primary">customize preview</a>
+            <a href="Preview-form" class="btn btn-primary">Exclusive preview</a>
         </div>
+
     </header><!-- end of page header -->
-    <div class="scroll-reveal">
+    <div class="scroll-reveal body ">
+            <canvas id="backgroundCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></canvas>
+
         {{> __about}}
     </div>
 
