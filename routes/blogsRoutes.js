@@ -29,7 +29,6 @@ const deleteFile = (filePath) => {
 
 // Route to add a new blog post
 router.post('/add-blog', upload.single('imag'), async (req, res) => {
-    console.log("POST /api/add-blog route hit");
     const referrer = req.get('Referer');
     const { title, description, contents } = req.body;
     const En = req.body.En === 'true' || req.body.En === 'True';

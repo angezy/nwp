@@ -1,36 +1,73 @@
-require('dotenv').config(); // Load .env variables
-const { MailerSend, EmailParams, Sender, Recipient } = require("mailersend");
+require('dotenv').config(); 
+const axios = require('axios');
 
-const mailerSend = new MailerSend({
-    apiKey: process.env.API_KEY,
-});
-
-// Function to send an email
-const sendEmail = async (recipientEmail, recipientName, subject, htmlContent, textContent) => {
-    const sentFrom = new Sender("info@nickswebprojects.site", "Your Website");
-
-    // Dynamic recipient from form data
-    const recipients = [new Recipient(recipientEmail, recipientName)];
-
-    // Hardcoded CC and BCC for notifications
-    const cc = [new Recipient(process.env.RECIPIENT_EMAIL2, "Manager")];
-    const bcc = process.env.BCC_EMAILS;
-    const emailParams = new EmailParams()
-        .setFrom(sentFrom)
-        .setTo(recipients)
-        .setCc(cc)
-        .setBcc(bcc)
-        .setSubject(subject)
-        .setHtml(htmlContent)
-        .setText(textContent);
-
-    try {
-        const response = await mailerSend.email.send(emailParams);
-        console.log('Email sent successfully:', response);
-    } catch (error) {
-        console.error('Error sending email:', error);
-        throw error;
-    }
+// تنظیمات اولیه SendPulse
+const sendPulseConfig = {
+  apiUrl: 'https://api.sendpulse.com',
+  clientId: process.env.api_id, 
+  clientSecret: process.env.api_secret 
 };
 
-module.exports = sendEmail;
+let accessToken = null;
+
+/**
+ * گرفتن توکن دسترسی
+ * @returns {Promise<string>} - توکن دسترسی
+ */
+const getAccessToken = async () => {
+  try {
+    if (!accessToken) {
+      const response = await axios.post(`${sendPulseConfig.apiUrl}/oauth/access_token`, {
+        grant_type: 'client_credentials',
+        client_id: sendPulseConfig.clientId,
+        client_secret: sendPulseConfig.clientSecret
+      });
+      accessToken = response.data.access_token;
+    }
+    return accessToken;
+  } catch (error) {
+    console.error('Error fetching access token:', error.response?.data || error.message);
+    throw new Error('Failed to get access token.');
+  }
+};
+
+/**
+ * ارسال ایمیل با استفاده از SendPulse API
+ * @param {string} to - آدرس گیرنده
+ * @param {string} subject - موضوع ایمیل
+ * @param {string} text - متن ساده ایمیل
+ * @param {string} html - محتوای HTML ایمیل
+ * @returns {Promise<void>}
+ */
+const sendEmail = async (recipients, subject, text, html) => {
+    try {
+      const token = await getAccessToken();
+      const toRecipients = recipients.map(({ email, name }) => ({ email, name }));
+
+
+      const response = await axios.post(
+        `${sendPulseConfig.apiUrl}/smtp/emails`,
+        {
+          email: {
+            from: {
+              name: 'Nick Web Admin',
+              email: process.env.sender // Sender email address
+            },
+            to: toRecipients, 
+            subject,          // Subject
+            text,             // Plain text
+            html              // HTML content
+          }
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+      console.log('Email sent successfully:', response.data);
+    } catch (error) {
+      console.error('Error sending email:', error.response?.data || error.message);
+      throw new Error('Failed to send email.');
+    }
+  };
+  
+  module.exports = sendEmail;

@@ -14,6 +14,16 @@ const blogsRoutes = require('./routes/blogsRoutes');
 const authMiddleware = require('./middleware/authMiddleware');
 const contactRoute = require('./routes/contactusRoute');
 
+const app = express();
+const port = process.env.PORT;
+
+// Middleware to handle cookies
+app.use(cookieParser());
+
+// Middleware to parse JSON and URL-encoded requests
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 const fetchBlogPost = async (postId) => {
     try {
         let pool = await sql.connect(dbConfig);
@@ -27,17 +37,6 @@ const fetchBlogPost = async (postId) => {
     }
 };
 
-
-const app = express();
-const port = process.env.PORT;
-
-// Middleware to handle cookies
-app.use(cookieParser());
-
-// Middleware to parse JSON and URL-encoded requests
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
 async function fetchBlogPosts() {
     try {
         let pool = await sql.connect(dbConfig);
@@ -49,6 +48,7 @@ async function fetchBlogPosts() {
         throw new Error('Error fetching blog posts');
     }
 }
+
 async function fetchBlogPostsfa() {
     try {
         // Connect to the database
@@ -154,6 +154,20 @@ app.get('/Blogs', async (req, res) => {
         res.status(500).send(err.message);
     }
 });
+
+app.get('/blog/:id', async (req, res) => {
+    const postId = req.params.id;
+    try {
+        const post = await fetchBlogPost(postId);
+        if (!post) {
+            return res.status(404).send('Blog post not found');
+        }
+        res.render('blog', { layout: 'main', title: post.Title, postt: post });
+    } catch (err) {
+        res.status(500).send('Error retrieving blog post');
+    }
+});
+
 app.get('/blogsfa', async (req, res) => {
     try {
         const blogPosts = await fetchBlogPostsfa();
@@ -170,18 +184,6 @@ app.get('/blogfa/:id', async (req, res) => {
             return res.status(404).send('Blog post not found');
         }
         res.render('blogfa', { layout: '_fa', title: post.Title, postt: post });
-    } catch (err) {
-        res.status(500).send('Error retrieving blog post');
-    }
-});
-app.get('/blog/:id', async (req, res) => {
-    const postId = req.params.id;
-    try {
-        const post = await fetchBlogPost(postId);
-        if (!post) {
-            return res.status(404).send('Blog post not found');
-        }
-        res.render('blog', { layout: 'main', title: post.Title, postt: post });
     } catch (err) {
         res.status(500).send('Error retrieving blog post');
     }
@@ -257,6 +259,7 @@ app.get('/blogsEditorfa', authMiddleware, async (req, res) => {
         res.status(500).send('Error fetching blog posts');
     }
 });
+
 app.get('/blogsEditor', authMiddleware, async (req, res) => {
     try {
         let pool = await sql.connect(dbConfig);

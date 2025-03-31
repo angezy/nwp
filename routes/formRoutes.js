@@ -48,7 +48,7 @@ router.post('/preview-form', validateAndSanitize, async (req, res) => {
       PreferredPlatform: validator.escape(formData.PreferredPlatform || ''),
       ExternalIntegrations: validator.escape(formData.ExternalIntegrations || ''),
       MaintenanceRequired: formData.MaintenanceRequired ? true : false,
-      Budget: validator.isInt(formData.Budget || '') ? formData.Budget : null,
+      Budget: validator.isInt(formData.Budget ) ? formData.Budget : null,
       LaunchDate: validator.isDate(formData.LaunchDate || '') ? formData.LaunchDate : null,
       Milestones: validator.escape(formData.Milestones || ''),
       CurrentWebsiteChallenges: validator.escape(formData.CurrentWebsiteChallenges || ''),
@@ -104,40 +104,34 @@ router.post('/preview-form', validateAndSanitize, async (req, res) => {
       .input('lang', sql.NVarChar, sanitizedFormData.lang)
       .query(query);
 
+      const sendEmail = require('../models/mailer');
 
-
-
-        // Prepare email details
+      const main = async () => {
+        const recipients  = [{email: process.env.RECIPIENT_EMAIL1 , name: 'Hesannick'}, {email: process.env.RECIPIENT_EMAIL2 , name: 'Parmis'}]; // List of recipients        // Prepare email details
         const lang = sanitizedFormData.lang;
         const subject = lang === 'fa'
             ? 'درخواست جدید پیش نمایش'
             : 'Request a new preview';
-        const htmlMessage = lang === 'fa'
+        const html = lang === 'fa'
             ? `<strong>شما یک درخواست جدید از ${sanitizedFormData.FullName} (${sanitizedFormData.Email}) دریافت کرده‌اید:</strong><br><br>${sanitizedFormData.content}`
             : `<strong>You have received a new Request from ${sanitizedFormData.FullName} (${sanitizedFormData.Email}):</strong><br><br>${sanitizedFormData.content}`;
-        const textMessage = lang === 'fa'
+        const text = lang === 'fa'
             ? `شما یک پیام جدید از ${sanitizedFormData.FullName} (${sanitizedFormData.Email}) دریافت کرده‌اید:\n\n${sanitizedFormData.SpecificRequests}`
             : `You have received a new message from ${sanitizedFormData.FullName} (${sanitizedFormData.Email}):\n\n${sanitizedFormData.SpecificRequests}`;
 
-        // Send email with dynamic recipient
-        const sentFrom = new Sender("info@nickswebprojects.site", "Nicks Web Admin");
-
-        const recipients = [new Recipient(process.env.RECIPIENT_EMAIL2, "Managers")];
-
-        const cc = [new Recipient(process.env.RECIPIENT_EMAIL1, "Managers")];
-        const emailParams = new EmailParams()
-            .setFrom(sentFrom)
-            .setTo(recipients)
-            .setCc(cc)
-            .setSubject(subject)
-            .setHtml(htmlMessage)
-            .setText(textMessage);
-
-        // Send the email
-        await mailerSend.email.send(emailParams);
-        console.log('Email sent successfully');
-
-
+            try {
+              await sendEmail(recipients , subject, text, html);
+              console.log('Email sent successfully!');
+            } catch (error) {
+              console.error('Failed to send email:', error.message);
+            }
+          };
+          
+          main();
+          
+          
+     
+ 
       const successMessage = encodeURIComponent("Form submitted successfully!");
     
       // Redirect back to the referring page with a success message

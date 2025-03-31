@@ -10,20 +10,20 @@ require('dotenv').config();
 
 
 // Rate limiter for authentication routes
-//const limiter = rateLimit({
-  //  windowMs: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
-  //  max: 3, // Limit each IP to 3 requests per windowMs (24 hours)
-   // message: 'Too many requests from this IP, please try again after 24 hours.'
-// });
+const limiter = rateLimit({
+    windowMs: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
+    max: 3, // Limit each IP to 3 requests per windowMs (24 hours)
+    message: 'Too many requests from this IP, please try again after 24 hours.'
+ });
 
-// router.use(limiter);
+router.use(limiter);
 
 // Signup Route
 router.post('/signup', validateSignup, handleValidationErrors, async (req, res) => {
     const { username, email, password } = req.body;
 
     try {
-        const pool = await dbConfig();
+        const pool = await sql.connect(dbConfig); 
 
         // Check if the user already exists
         const existingUser = await pool
