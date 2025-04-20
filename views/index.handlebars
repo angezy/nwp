@@ -4,7 +4,8 @@
     <!-- page header -->
     <header id="home" class="header body">
         <!-- Video background -->
-    <canvas id="backgroundCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></canvas>
+        <canvas id="backgroundCanvas"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></canvas>
         <div class="overlay"></div>
         <div class="header-content container">
             <h1 class="header-title">
@@ -19,7 +20,8 @@
 
     </header><!-- end of page header -->
     <div class="scroll-reveal body ">
-            <canvas id="backgroundCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></canvas>
+        <canvas id="backgroundCanvas"
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></canvas>
 
         {{> __about}}
     </div>
@@ -40,6 +42,12 @@
         {{> testimonial}}
     </div>
 
+
+    <div class="scroll-reveal">
+        {{> __pricing}}
+    </div>
+
+
     <div class="scroll-reveal">
         {{> __Blogs}}
     </div>
@@ -52,35 +60,35 @@
         {{> contactus}}
     </div>
 
-        {{> __footer}}
+    {{> __footer}}
 
 
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const revealSections = document.querySelectorAll('.scroll-reveal');
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const revealSections = document.querySelectorAll('.scroll-reveal');
 
-  function handleScroll() {
-    revealSections.forEach((section) => {
-      const sectionTop = section.getBoundingClientRect().top;
-      const sectionBottom = section.getBoundingClientRect().bottom;
-      const triggerPoint = window.innerHeight * 0.8; // Adjust trigger point
+            function handleScroll() {
+                revealSections.forEach((section) => {
+                    const sectionTop = section.getBoundingClientRect().top;
+                    const sectionBottom = section.getBoundingClientRect().bottom;
+                    const triggerPoint = window.innerHeight * 0.8; // Adjust trigger point
 
-      // Show section when scrolled down
-      if (sectionTop < triggerPoint && sectionBottom > 0) {
-        section.classList.add('visible');
-      } else {
-        // Hide section when scrolled back up or out of view
-        section.classList.remove('visible');
-      }
-    });
-  }
+                    // Show section when scrolled down
+                    if (sectionTop < triggerPoint && sectionBottom > 0) {
+                        section.classList.add('visible');
+                    } else {
+                        // Hide section when scrolled back up or out of view
+                        section.classList.remove('visible');
+                    }
+                });
+            }
 
-  window.addEventListener('scroll', handleScroll);
-  handleScroll(); // Run on page load to check the initial visibility
-});
+            window.addEventListener('scroll', handleScroll);
+            handleScroll(); // Run on page load to check the initial visibility
+        });
 
-</script>
+    </script>
 
 
 </div>
