@@ -70,8 +70,8 @@ app.get('/Preview-form-fa', (req, res) => res.render('Preview-form-fa', { title:
 
 // Global Error Handler
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ message: 'Internal server error' });
+  console.error('Error:', err.stack || err);
+  res.status(500).send('Internal Server Error');
 });
 
 // Start the Application

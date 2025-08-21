@@ -116,8 +116,9 @@
         width: 100%;
         display: flex;
         justify-content: center;
-        height: 500px;
+        height: auto; 
         gap: 10px;
+        flex-wrap: wrap; 
 
         >div {
             flex: 0 0 150px;
@@ -216,6 +217,35 @@
             &:hover .content {
                 font-size: 1.5rem;
             }
+        }
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+        .contaier {
+            flex-direction: column; /* Stack items vertically */
+            align-items: center;
+        }
+
+        .contaier > div {
+            flex: 0 0 90%; /* Adjust width for mobile */
+            margin-bottom: 20px; /* Add spacing between items */
+        }
+
+        .pricing-header h1 {
+            font-size: 1.5rem; /* Adjust font size for smaller screens */
+        }
+
+        .pricing-header p {
+            font-size: 0.9rem;
+        }
+
+        .content {
+            font-size: 0.9rem; /* Adjust content font size */
+        }
+
+        .content .btn {
+            padding: 8px 16px; /* Adjust button size */
         }
     }
 </style>

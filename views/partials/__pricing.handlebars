@@ -14,7 +14,7 @@
                 <p>Portfolio or Gallery Page</p>
                 <p>Features Available in the Template</p>
             </div>
-            <span>110$</span>
+            <span>11 Million Toman</span>
             <a href="Preview-form" class="btn">Choose</a>
         </div>
     </div>
@@ -29,7 +29,7 @@
                 <p>Online Store</p>
                 <p>6-Month Support</p>
             </div>
-            <span>210$</span>
+            <span>21 Million Toman</span>
             <a href="Preview-form" class="btn">Choose</a>
         </div>
     </div>
@@ -44,7 +44,7 @@
                 <p>Online Store</p>
                 <p>Software Integration</p>
             </div>
-            <span>350$</span>
+            <span>35 Million Toman</span>
             <a href="Preview-form" class="btn">Choose</a>
         </div>
     </div>
@@ -60,7 +60,7 @@
                 <p>Integration with Various Systems</p>
                 <p>12-Month Support</p>
             </div>
-            <span>840$</span>
+            <span>84 Million Toman</span>
             <a href="Preview-form" class="btn">Choose</a>
         </div>
     </div>
@@ -75,7 +75,7 @@
                 <p>Integration with Various Systems</p>
                 <p>24-Month Support</p>
             </div>
-            <span>1200$</span>
+            <span>120 Million Toman</span>
             <a href="Preview-form" class="btn">Choose</a>
         </div>
     </div>
@@ -90,11 +90,22 @@
                 <p>Integration with Various Systems</p>
                 <p>36-Month Support</p>
             </div>
-            <span>2000$</span>
+            <span>500 Million Toman</span>
             <a href="Preview-form" class="btn">Choose</a>
         </div>
     </div>
 </div>
+
+<script>
+    window.addEventListener('scroll', function () {
+        const container = document.querySelector('.contaier');
+        if (!container) return;
+        const rect = container.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            container.classList.add('slide-left-then-down');
+        }
+    });
+</script>
 
 <style>
     .pricing-header {
@@ -116,8 +127,31 @@
         width: 100%;
         display: flex;
         justify-content: center;
-        height: 650px;
+        height: auto; /* Adjust height for mobile */
         gap: 10px;
+        flex-wrap: wrap; /* Allow wrapping for smaller screens */
+        opacity: 1;
+        transform: translateX(0) translateY(0);
+        transition: transform 0.5s, opacity 0.5s;
+    }
+
+    .contaier.slide-left-then-down {
+        animation: leftThenDown 1s forwards;
+    }
+
+    @keyframes leftThenDown {
+        0% {
+            opacity: 1;
+            transform: translateX(0) translateY(0);
+        }
+        40% {
+            opacity: 1;
+            transform: translateX(-100px) translateY(0);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(-100px) translateY(60px);
+        }
 
         >div {
             flex: 0 0 150px;
@@ -216,6 +250,35 @@
             &:hover .content {
                 font-size: 1.5rem;
             }
+        }
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+        .contaier {
+            flex-direction: column; /* Stack items vertically */
+            align-items: center;
+        }
+
+        .contaier > div {
+            flex: 0 0 90%; /* Adjust width for mobile */
+            margin-bottom: 20px; /* Add spacing between items */
+        }
+
+        .pricing-header h1 {
+            font-size: 1.5rem; /* Adjust font size for smaller screens */
+        }
+
+        .pricing-header p {
+            font-size: 0.9rem;
+        }
+
+        .content {
+            font-size: 0.9rem; /* Adjust content font size */
+        }
+
+        .content .btn {
+            padding: 8px 16px; /* Adjust button size */
         }
     }
 </style>

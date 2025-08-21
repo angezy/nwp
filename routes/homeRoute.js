@@ -59,7 +59,7 @@ router.get('/fa', async (req, res) => {
     try {
         const blogPosts = await fetchBlogPostsfa();
         const recentPosts = blogPosts.slice(0, 4);
-        res.render('fa', { title: 'نیک وب پروژه', layout: "_fa", blogs: recentPosts });
+        res.render('Fa', { title: 'نیک وب پروژه', layout: "_fa", blogs: recentPosts });
     } catch (err) {
         res.status(500).send(err.message);
     }
@@ -68,7 +68,7 @@ router.get('/fa', async (req, res) => {
 router.get('/Blogs', async (req, res) => {
     try {
         const blogPosts = await fetchBlogPosts();
-        res.render('blogs', { layout: 'main', title: 'All Blog Posts', blogs: blogPosts });
+        res.render('Blogs', { layout: 'main', title: 'All Blog Posts', blogs: blogPosts });
     } catch (err) {
         res.status(500).send(err.message);
     }
@@ -90,7 +90,7 @@ router.get('/blog/:id', async (req, res) => {
 router.get('/blogsfa', async (req, res) => {
     try {
         const blogPosts = await fetchBlogPostsfa();
-        res.render('blogsfa', { layout: '_fa', title: 'آخرین مقالات', blogs: blogPosts });
+        res.render('BlogsFa', { layout: '_fa', title: 'آخرین مقالات', blogs: blogPosts });
     } catch (err) {
         res.status(500).send('Error fetching blog posts');
     }
@@ -109,7 +109,7 @@ router.get('/blogfa/:id', async (req, res) => {
     }
 });
 
-router.get('/Contactus', (req, res) => res.render('Contactus', { title: `Contact Us` }));
+router.get('/contactus', (req, res) => res.render('Contactus', { title: `Contact Us` }));
 
 router.get('/zodiak', (req, res) => res.render('zodiak', { title: `چارت تولد رایگان` }));
 
