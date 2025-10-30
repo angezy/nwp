@@ -463,6 +463,17 @@
           element.value = decodeURIComponent(value);
         }
       });
+      
+      // After reading errors/success (and populating fields), remove query params from the URL
+      // so the messages won't reappear on reload or back-navigation.
+      try {
+        if (errors || success || Array.from(params.keys()).length > 0) {
+          const newUrl = window.location.pathname + window.location.hash;
+          history.replaceState(null, document.title, newUrl);
+        }
+      } catch (e) {
+        console.error('Failed to clear URL query params:', e);
+      }
     }
 
     // Run on page load

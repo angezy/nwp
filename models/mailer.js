@@ -31,14 +31,6 @@ const getAccessToken = async () => {
   }
 };
 
-/**
- * ارسال ایمیل با استفاده از SendPulse API
- * @param {string} to - آدرس گیرنده
- * @param {string} subject - موضوع ایمیل
- * @param {string} text - متن ساده ایمیل
- * @param {string} html - محتوای HTML ایمیل
- * @returns {Promise<void>}
- */
 const sendEmail = async (recipients, subject, text, html) => {
     try {
       const token = await getAccessToken();
@@ -50,7 +42,7 @@ const sendEmail = async (recipients, subject, text, html) => {
         {
           email: {
             from: {
-              name: 'Nick Web Admin',
+              name: 'Nick Web Project Admin',
               email: process.env.sender // Sender email address
             },
             to: toRecipients, 

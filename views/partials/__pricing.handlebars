@@ -3,282 +3,204 @@
     <p>The best plans tailored for your needs</p>
 </div>
 
-<div class="contaier">
-    <div>
-        <div class="content">
+<!-- Cards container: uses CSS grid for clean, responsive layout -->
+<div class="contaier" role="list">
+    <div class="card" role="listitem">
+        <div class="card-inner">
             <h2>Earth Plan</h2>
-            <div>
-                <p>Homepage</p>
-                <p>Blog or News Page</p>
-                <p>Contact Us Page</p>
-                <p>Portfolio or Gallery Page</p>
-                <p>Features Available in the Template</p>
-            </div>
-            <span>11 Million Toman</span>
+            <ul class="features">
+                <li>Homepage</li>
+                <li>Blog or News Page</li>
+                <li>Contact Us Page</li>
+                <li>Portfolio or Gallery Page</li>
+                <li>Features Available in the Template</li>
+            </ul>
+            <div class="price">11M Toman</div>
             <a href="Preview-form" class="btn">Choose</a>
         </div>
     </div>
-    <div>
-        <div class="content">
+
+    <div class="card" role="listitem">
+        <div class="card-inner">
             <h2>Moon Plan</h2>
-            <div>
-                <p>Custom Design</p>
-                <p>Admin Panel</p>
-                <p>Blog and News</p>
-                <p>Image Gallery</p>
-                <p>Online Store</p>
-                <p>6-Month Support</p>
-            </div>
-            <span>21 Million Toman</span>
+            <ul class="features">
+                <li>Custom Design</li>
+                <li>Admin Panel</li>
+                <li>Blog and News</li>
+                <li>Image Gallery</li>
+                <li>Online Store</li>
+                <li>6-Month Support</li>
+            </ul>
+            <div class="price">21M Toman</div>
             <a href="Preview-form" class="btn">Choose</a>
         </div>
     </div>
-    <div>
-        <div class="content">
+
+    <div class="card" role="listitem">
+        <div class="card-inner">
             <h2>Mars Plan</h2>
-            <div>
-                <p>Custom Design</p>
-                <p>Advanced Admin Panel</p>
-                <p>Blog and News</p>
-                <p>Image Gallery</p>
-                <p>Online Store</p>
-                <p>Software Integration</p>
-            </div>
-            <span>35 Million Toman</span>
+            <ul class="features">
+                <li>Custom Design</li>
+                <li>Advanced Admin Panel</li>
+                <li>Blog and News</li>
+                <li>Image Gallery</li>
+                <li>Online Store</li>
+                <li>Software Integration</li>
+            </ul>
+            <div class="price">35M Toman</div>
             <a href="Preview-form" class="btn">Choose</a>
         </div>
     </div>
-    <div>
-        <div class="content">
+
+    <div class="card pro" role="listitem">
+        <span class="badge-pro">Pro</span>
+        <div class="card-inner">
             <h2>Saturn Plan</h2>
-            <div>
-                <p>Fully Custom Design</p>
-                <p>Professional Admin Panel</p>
-                <p>Blog and News</p>
-                <p>Appointment System</p>
-                <p>Advanced Store</p>
-                <p>Integration with Various Systems</p>
-                <p>12-Month Support</p>
-            </div>
-            <span>84 Million Toman</span>
-            <a href="Preview-form" class="btn">Choose</a>
+            <ul class="features">
+                <li>Fully Custom Design</li>
+                <li>Professional Admin Panel</li>
+                <li>Blog and News</li>
+                <li>Appointment System</li>
+                <li>Advanced Store</li>
+                <li>Integration with Various Systems</li>
+                <li>12-Month Support</li>
+            </ul>
+            <div class="price">84M Toman</div>
+            <a href="Preview-form" class="btn btn-primary">Choose</a>
         </div>
     </div>
-    <div>
-        <div class="content">
+
+    <div class="card pro" role="listitem">
+        <span class="badge-pro">Pro</span>
+        <div class="card-inner">
             <h2>Uranus Plan</h2>
-            <div>
-                <p>Fully Custom Design</p>
-                <p>Professional Admin Panel</p>
-                <p>Blog and News</p>
-                <p>Advanced Store</p>
-                <p>Integration with Various Systems</p>
-                <p>24-Month Support</p>
-            </div>
-            <span>120 Million Toman</span>
-            <a href="Preview-form" class="btn">Choose</a>
+            <ul class="features">
+                <li>Fully Custom Design</li>
+                <li>Professional Admin Panel</li>
+                <li>Blog and News</li>
+                <li>Advanced Store</li>
+                <li>Integration with Various Systems</li>
+                <li>24-Month Support</li>
+            </ul>
+            <div class="price">120M Toman</div>
+            <a href="Preview-form" class="btn btn-primary">Choose</a>
         </div>
     </div>
-    <div>
-        <div class="content">
+
+    <div class="card pro" role="listitem">
+        <span class="badge-pro">Pro</span>
+        <div class="card-inner">
             <h2>Neptune Plan</h2>
-            <div>
-                <p>Highly Advanced Design</p>
-                <p>Professional Admin Panel</p>
-                <p>Blog and News</p>
-                <p>Advanced Online Store</p>
-                <p>Integration with Various Systems</p>
-                <p>36-Month Support</p>
-            </div>
-            <span>500 Million Toman</span>
-            <a href="Preview-form" class="btn">Choose</a>
+            <ul class="features">
+                <li>Highly Advanced Design</li>
+                <li>Professional Admin Panel</li>
+                <li>Blog and News</li>
+                <li>Advanced Online Store</li>
+                <li>Integration with Various Systems</li>
+                <li>36-Month Support</li>
+            </ul>
+            <div class="price">500M Toman</div>
+            <a href="Preview-form" class="btn btn-primary">Choose</a>
         </div>
     </div>
 </div>
 
 <script>
+    // adds entrance animation class when container enters viewport
     window.addEventListener('scroll', function () {
         const container = document.querySelector('.contaier');
         if (!container) return;
         const rect = container.getBoundingClientRect();
         if (rect.top < window.innerHeight && rect.bottom > 0) {
-            container.classList.add('slide-left-then-down');
+            container.classList.add('slide-in');
         }
     });
+    // also trigger on load in case already visible
+    window.dispatchEvent(new Event('scroll'));
 </script>
 
 <style>
-    .pricing-header {
-        text-align: center;
-        margin-bottom: 20px;
+    :root{
+        --accent:#7645d8;
+        --accent-dark:#5a34a3;
+        --card-radius:14px;
+        --overlay: linear-gradient(0deg, rgba(2,2,46,0.7) 0%, rgba(2,2,46,0.18) 60%, rgba(255,255,255,0) 100%);
     }
 
-    .pricing-header h1 {
-        font-size: 2rem;
-        color: #7645d8;
+    .pricing-header{ text-align:center; margin: 18px 0 26px; }
+    .pricing-header h1{ font-size:2rem; color:var(--accent); margin:0 0 6px }
+    .pricing-header p{ color:#666; margin:0 }
+
+    .contaier{
+        width:100%;
+        display:grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap:22px;
+        align-items:stretch;
+        padding:6px;
+        transition:opacity .5s ease, transform .6s ease;
     }
 
-    .pricing-header p {
-        font-size: 1rem;
-        color: #555;
+    /* card base */
+    .card{
+        position:relative;
+        height:420px;
+        border-radius:var(--card-radius);
+        overflow:hidden;
+        cursor:pointer;
+        box-shadow: 0 8px 28px rgba(13,8,38,0.12);
+        display:flex;
+        align-items:stretch;
+        background-color: #111;
+        background-size:cover;
+        background-position:center;
+        transform:translateY(0);
+        transition: transform .4s cubic-bezier(.2,.9,.3,1), box-shadow .35s, filter .35s;
     }
 
-    .contaier {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        height: auto; /* Adjust height for mobile */
-        gap: 10px;
-        flex-wrap: wrap; /* Allow wrapping for smaller screens */
-        opacity: 1;
-        transform: translateX(0) translateY(0);
-        transition: transform 0.5s, opacity 0.5s;
+    /* nice hover effect */
+    .card:hover{ transform: translateY(-12px) scale(1.02); box-shadow: 0 20px 40px rgba(22,11,70,0.18); }
+
+    /* overlay + inner content */
+    .card::after{
+        content:''; position:absolute; inset:0; background:var(--overlay); pointer-events:none; mix-blend-mode:normal;
     }
 
-    .contaier.slide-left-then-down {
-        animation: leftThenDown 1s forwards;
+    .card-inner{
+        position:relative; z-index:2; padding:22px; color:#fff; display:flex; flex-direction:column; justify-content:flex-end; gap:10px;
     }
 
-    @keyframes leftThenDown {
-        0% {
-            opacity: 1;
-            transform: translateX(0) translateY(0);
-        }
-        40% {
-            opacity: 1;
-            transform: translateX(-100px) translateY(0);
-        }
-        100% {
-            opacity: 1;
-            transform: translateX(-100px) translateY(60px);
-        }
+    .card h2{ margin:0 0 6px; font-size:1.35rem; color:#fff }
+    .features{ list-style: none; margin:0; padding:0; color:rgba(255,255,255,.92); display:block }
+    .features li{ font-size:.98rem; opacity:.95; margin:4px 0 }
 
-        >div {
-            flex: 0 0 150px;
-            border-radius: 0.5rem;
-            transition: 0.5s ease-in-out;
-            cursor: pointer;
-            box-shadow: 1px 5px 15px #1e0e3e;
-            position: relative;
-            overflow: hidden;
+    .price{ font-weight:700; font-size:1.15rem; color:#fff; background:rgba(0,0,0,0.18); padding:6px 10px; border-radius:8px; display:inline-block }
 
-            &:nth-of-type(1) {
-                background: url("/public/imgs/earth.jpg") no-repeat 50% / cover;
-            }
+    .btn{ display:inline-block; margin-top:8px; padding:10px 16px; border-radius:8px; text-decoration:none; color:#fff; background:var(--accent); border:1px solid rgba(255,255,255,0.06); transition:background .2s }
+    .btn:hover{ background:var(--accent-dark) }
+    .btn-primary{ background: linear-gradient(90deg, var(--accent), var(--accent-dark)) }
 
-            &:nth-of-type(2) {
-                background: url("/public/imgs/moon.jpg") no-repeat 50% / cover;
-            }
+    /* Pro badge */
+    .badge-pro{ position:absolute; top:14px; right:14px; z-index:3; background: linear-gradient(90deg,#ff7a18,#af002d); color:#fff; padding:6px 12px; border-radius:999px; font-weight:700; box-shadow:0 6px 18px rgba(175,0,45,0.2); transform: rotate(-8deg) }
 
-            &:nth-of-type(3) {
-                background: url("/public/imgs/mars.jpg") no-repeat 50% / cover;
-            }
+    /* entrance animation */
+    .contaier.slide-in{ animation: entrance 700ms ease both }
+    @keyframes entrance{ from{ opacity:0; transform:translateY(18px) } to{ opacity:1; transform:none } }
 
-            &:nth-of-type(4) {
-                background: url("/public/imgs/saturn.jpg") no-repeat 50% / cover;
-            }
+    /* specific planet backgrounds (use your /public/imgs/* images) */
+    .contaier > .card:nth-of-type(1){ background-image: url('/public/imgs/earth.jpg') }
+    .contaier > .card:nth-of-type(2){ background-image: url('/public/imgs/moon.jpg') }
+    .contaier > .card:nth-of-type(3){ background-image: url('/public/imgs/mars.jpg') }
+    .contaier > .card:nth-of-type(4){ background-image: url('/public/imgs/saturn.jpg') }
+    .contaier > .card:nth-of-type(5){ background-image: url('/public/imgs/uranus.jpg') }
+    .contaier > .card:nth-of-type(6){ background-image: url('/public/imgs/neptune.jpg') }
 
-            &:nth-of-type(5) {
-                background: url("/public/imgs/uranus.jpg") no-repeat 50% / cover;
-            }
-
-            &:nth-of-type(6) {
-                background: url("/public/imgs/neptune.jpg") no-repeat 50% / cover;
-            }
-
-            .content {
-                font-size: 1rem;
-                color: #fff;
-                display: flex;
-                align-items: center;
-                padding: 15px;
-                opacity: 1;
-                flex-direction: column;
-                height: 100%;
-                justify-content: flex-end;
-                background: rgb(2, 2, 46);
-                background: linear-gradient(0deg,
-                        rgba(2, 2, 46, 0.6755077030812324) 0%,
-                        rgba(255, 255, 255, 0) 100%);
-                transform: translatey(0%);
-                visibility: visible;
-                transition: font-size 0.3s ease;
-                position: relative;
-
-                h2 {
-                    color: #fff;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin: 0;
-                    padding: 10px 0;
-                    height: 100%;
-                }
-
-                p {
-                    color: #fff;
-                }
-
-                span {
-                    display: block;
-                    margin-top: 5px;
-                    font-size: 1.2rem;
-                }
-
-                .btn {
-                    margin-top: 10px;
-                    padding: 10px 20px;
-                    background-color: #7645d8;
-                    color: #fff;
-                    border: none;
-                    border-radius: 5px;
-                    cursor: pointer;
-                    transition: background-color 0.3s ease;
-                }
-
-                .btn:hover {
-                    background-color: #5a34a3;
-                }
-            }
-
-            &:hover {
-                flex: 0 0 250px;
-                box-shadow: 1px 3px 15px #7645d8;
-                transform: translatey(-30px);
-            }
-
-            &:hover .content {
-                font-size: 1.5rem;
-            }
-        }
-    }
-
-    /* Mobile Styles */
-    @media (max-width: 768px) {
-        .contaier {
-            flex-direction: column; /* Stack items vertically */
-            align-items: center;
-        }
-
-        .contaier > div {
-            flex: 0 0 90%; /* Adjust width for mobile */
-            margin-bottom: 20px; /* Add spacing between items */
-        }
-
-        .pricing-header h1 {
-            font-size: 1.5rem; /* Adjust font size for smaller screens */
-        }
-
-        .pricing-header p {
-            font-size: 0.9rem;
-        }
-
-        .content {
-            font-size: 0.9rem; /* Adjust content font size */
-        }
-
-        .content .btn {
-            padding: 8px 16px; /* Adjust button size */
-        }
+    /* responsive tweaks */
+    @media (max-width:900px){ .card{ height:380px } }
+    @media (max-width:520px){
+        .contaier{ grid-template-columns: 1fr }
+        .card{ height:360px }
+        .card-inner{ padding:16px }
+        .features li{ font-size:.95rem }
     }
 </style>

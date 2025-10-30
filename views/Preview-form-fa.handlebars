@@ -245,7 +245,7 @@
 
                     <input name="DesignInspirations" type="text" id="DesignInspirations"
                       class=" text-secondary form-control" />
-                    <label class="form-label">وب‌سایت‌هایی وجود دارند که از طراحی آن‌ها الهام گرفته باشید؟</label>
+                    <label class="form-label">وب‌سایت‌هایی الگو که از طراحی آن‌ها الهام گرفته باشید؟</label>
                   </div>
                 </div>
 
@@ -492,6 +492,19 @@ if (success) {
           element.value = decodeURIComponent(value);
         }
       });
+
+      // After reading errors/success (and populating fields), remove query params from the URL
+      // so the messages won't reappear on reload or back-navigation.
+      try {
+        // Only clear the search if there was an errors or success param or any params used to prefill
+        if (errors || success || Array.from(params.keys()).length > 0) {
+          const newUrl = window.location.pathname + window.location.hash;
+          history.replaceState(null, document.title, newUrl);
+        }
+      } catch (e) {
+        // If anything goes wrong, just log it — no user-facing failure
+        console.error('Failed to clear URL query params:', e);
+      }
     }
 
     // Run on page load
